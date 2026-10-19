@@ -1,0 +1,28 @@
+{% include './header.html' %}
+{% load static %}
+    
+    <h1>Consulta de ordenes de trabajo</h1>
+
+    <table class="table-user">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cuenta</th>
+                <th>Perfil</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <td>{{u.name}}</td>
+                <td>{{u.account}}</td>
+                <td> {{u.profile.name}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <script src="{% static 'hello/js/scripts.js'%}"></script>
+</body>
+</html>
