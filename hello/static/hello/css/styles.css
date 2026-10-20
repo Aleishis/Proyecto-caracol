@@ -16,9 +16,10 @@ h1{
 }
 
 .table-user {
-    width: 100%;
+    width: calc(100% - 28px);
     font-weight: 800;
     font-family: Arial, Helvetica, sans-serif;
+    margin: 5px 14px 0 14px;
 }
 
 .table-user thead{
@@ -48,9 +49,30 @@ header{
 }
 
 .dashboard-card {
-  flex: 1;            /* todas con el mismo ancho */
+  flex: 1;            /* el ancho de las cards */
   padding: 20px;
   background: whitesmoke;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.buttons-section{
+    display: flex;
+    justify-content: flex-end; /* es para mover los botones hasta la derecha */
+    gap: 10px;
+    margin: 0 9px 5px 0;
+}
+
+.btn{
+    border-radius: 6px;
+    color: black;
+    padding: 5px;
+}
+
+.btn.add{
+    background-color: greenyellow;
+}
+
+.btn.delete{
+    background-color: red;
 }
