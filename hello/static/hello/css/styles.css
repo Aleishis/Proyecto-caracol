@@ -1,11 +1,10 @@
-body{
+body, html{
     background-color: rgb(255, 255, 255);
     text-align: center;
-    padding: 20px;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-items: center;
+    margin: 0;
 }
 
 h1{
@@ -36,4 +35,22 @@ h1{
 
 header{
     background-color: aquamarine;
+    padding: 15px;
+    text-align: left;
+    text-decoration: solid;
+    flex: 1;
+}
+
+.dashboard {
+    display: flex;
+    gap: 16px;
+    margin: 24px 8px;
+}
+
+.dashboard-card {
+  flex: 1;            /* todas con el mismo ancho */
+  padding: 20px;
+  background: whitesmoke;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }

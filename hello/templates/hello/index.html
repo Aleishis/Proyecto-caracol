@@ -1,7 +1,33 @@
 {% include './header.html' %}
 {% load static %}
     
-    <h1>Consulta de ordenes de trabajo</h1>
+    <section class="dashboard">
+
+        <div class="dashboard-card">
+            Total orders
+            <br>
+            {{counters.total}}
+        </div>
+        <div class="dashboard-card">
+            Pending orders
+            <br>
+            {{counters.pending}}
+        </div>
+        <div class="dashboard-card">
+            Ongoing orders
+            <br>
+            {{counters.ongoing}}
+        </div>
+        <div class="dashboard-card">
+            Finished orders
+            <br>
+            {{counters.finished}}
+        </div>
+
+    </section>    
+
+
+    <section>
 
     <table class="table-user">
         <thead>
@@ -23,6 +49,8 @@
             {% endfor %}
         </tbody>
     </table>
+
+    </section>
 
 
     <script src="{% static 'hello/js/scripts.js'%}"></script>

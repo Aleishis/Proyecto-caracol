@@ -5,7 +5,8 @@ from .entities.work_order import Work_order
 
 def index(request):
     work_orders = Work_order.get_all()
-    return render(request, 'hello/index.html', {'work_orders':work_orders})
+    counters = Work_order.get_counters()
+    return render(request, 'hello/index.html', {'work_orders':work_orders,'counters':counters})
 
 
 def people(request):
