@@ -1,0 +1,40 @@
+{% include './header.html' %}
+
+<section class="auth-container">
+    <div class="auth-card">
+        <h2>Iniciar sesión</h2>
+        <p>Ingresa tus datos para acceder al sistema.</p>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email"
+                       placeholder="ejemplo@correo.com"
+                       autocomplete="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password"
+                       placeholder="Ingresa tu contraseña"
+                       autocomplete="current-password" required>
+            </div>
+
+            {% if error %}
+                <p class="error-message">{{error}}</p>
+            {% endif %}
+
+            <button type="submit" class="btn">Iniciar sesión</button>
+        </form>
+
+        <p class="auth-link">
+            ¿No tienes cuenta?
+            <a href="{% url 'registro' %}">Regístrate aquí</a>
+        </p>
+    </div>
+</section>
+
+</body>
+</html>
