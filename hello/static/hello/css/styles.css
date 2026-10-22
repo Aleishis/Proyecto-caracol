@@ -81,6 +81,11 @@ header a {
     background-color: #c82333;
 }
 
+.btn.edit {
+    background-color: lightblue;
+    color: black;
+}
+
 /* Tabla de órdenes */
 .table-user {
     width: 100%;

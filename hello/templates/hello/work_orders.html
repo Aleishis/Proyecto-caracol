@@ -28,9 +28,6 @@
 
 <section class="buttons-section">
     <button class="btn add">Add</button>
-    <button class="btn delete">Delete</button>
-    <a href="{% url 'index' %}" class="btn">Iniciar sesión</a>
-    <a href="{% url 'signup' %}" class="btn">Registrarse</a>
 </section>
 
 <section style="padding: 0 14px;">
@@ -42,6 +39,7 @@
                 <th>Description</th>
                 <th>Status</th>
                 <th>Responsible</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -51,6 +49,10 @@
                 <td>{{w.description}}</td>
                 <td>{{w.status.name}}</td>
                 <td>{{w.responsible}}</td>
+                <td>
+                     <button class="btn delete">Delete</button>
+                     <button class="btn edit">Edit</button>
+                </td>
             </tr>
             {% empty %}
             <tr>
