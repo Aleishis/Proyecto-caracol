@@ -1,37 +1,39 @@
 {% include './header.html' %}
 {% load static %}
-    
-    <section class="dashboard">
 
-        <div class="dashboard-card">
-            Total orders
-            <br>
-            {{counters.total}}
-        </div>
-        <div class="dashboard-card">
-            Pending orders
-            <br>
-            {{counters.pending}}
-        </div>
-        <div class="dashboard-card">
-            Ongoing orders
-            <br>
-            {{counters.ongoing}}
-        </div>
-        <div class="dashboard-card">
-            Finished orders
-            <br>
-            {{counters.finished}}
-        </div>
+<section class="dashboard">
 
-    </section>    
+    <div class="dashboard-card">
+        Total orders
+        <br>
+        {{counters.total}}
+    </div>
+    <div class="dashboard-card">
+        Pending orders
+        <br>
+        {{counters.pending}}
+    </div>
+    <div class="dashboard-card">
+        Ongoing orders
+        <br>
+        {{counters.ongoing}}
+    </div>
+    <div class="dashboard-card">
+        Finished orders
+        <br>
+        {{counters.finished}}
+    </div>
 
-    <section class="buttons-section">
-        <button class="btn add">Add</button>
-        <button class="btn delete">Delete</button>
-    </section>
+</section>
 
-    <section style="padding: 0 14px;">
+<section class="buttons-section">
+    <button class="btn add">Add</button>
+    <button class="btn delete">Delete</button>
+    <a href="{% url 'login' %}" class="btn">Iniciar sesión</a>
+    <a href="{% url 'registro' %}" class="btn">Registrarse</a>
+</section>
+
+<section style="padding: 0 14px;">
 
     <table class="table-user">
         <thead>
@@ -47,16 +49,19 @@
             <tr>
                 <td>{{w.title}}</td>
                 <td>{{w.description}}</td>
-                <td> {{w.status.name}}</td>
+                <td>{{w.status.name}}</td>
                 <td>{{w.responsible}}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No hay órdenes de trabajo.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    </section>
+</section>
 
-
-    <script src="{% static 'hello/js/scripts.js'%}"></script>
+<script src="{% static 'hello/js/scripts.js' %}"></script>
 </body>
 </html>
