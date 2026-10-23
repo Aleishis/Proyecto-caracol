@@ -19,13 +19,29 @@ from django.urls import path
 
 from hello import views
 
+from django.contrib import admin
+from django.urls import path
+
+from hello import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('people/', views.people, name='people'),
     path('work-orders/', views.work_orders, name='work_orders'),
     path('signup/', views.signup, name='signup'),
+
+    path('logout/', views.logout_view, name='logout'),
+
     path('work_orders/add/', views.add_work_order, name='add_work_order'),
-    path('work_orders/<int:order_id>/edit/', views.edit_work_order, name='edit_work_order'),
-    path('work_orders/<int:order_id>/delete/', views.delete_work_order, name='delete_work_order'),
+    path(
+        'work_orders/<int:order_id>/edit/',
+        views.edit_work_order,
+        name='edit_work_order'
+    ),
+    path(
+        'work_orders/<int:order_id>/delete/',
+        views.delete_work_order,
+        name='delete_work_order'
+    ),
 ]
