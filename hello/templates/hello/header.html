@@ -12,6 +12,8 @@
 <body>
 
     <header>
-        <h1>Bienvenidos</h1>
-        <a href="https://www.google.com/">Encuentra lo que quieras</a>
+        <a href="{% url 'work_orders'%}">Work Orders</a>
+        {% if request.session.profile == 1 %}
+            <a href="{% url 'people'%}">Manage Staff</a>
+        {% endif %}
     </header>
