@@ -1,0 +1,62 @@
+
+{% include './header.html' %}
+
+<section style="max-width: 550px; margin: 30px auto; padding: 20px;">
+
+    <h2>Add Work Order</h2>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <p>
+            <label>Title</label><br>
+            <input type="text" name="title" maxlength="60"
+                   value="{{ request.POST.title }}" required>
+        </p>
+
+        <p>
+            <label>Description</label><br>
+            <textarea name="description" rows="4"
+                      required>{{ request.POST.description }}</textarea>
+        </p>
+
+        <p>
+            <label>Status</label><br>
+            <select name="status" required>
+                {% for status in statuses %}
+                    <option value="{{ status.value }}">
+                        {{ status.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label>Responsible</label><br>
+            <select name="responsible" required>
+                <option value="">Select a user</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}">
+                        {{ user.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <button type="submit" class="btn add">Save</button>
+        <a href="{% url 'work_orders' %}" class="btn">Cancel</a>
+
+    </form>
+
+    {% if not users %}
+        <p>No registered users available. Register a user first.</p>
+    {% endif %}
+
+</section>
+
+</body>
+</html>

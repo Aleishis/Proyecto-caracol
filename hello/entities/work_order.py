@@ -48,3 +48,29 @@ class Work_order:
                       'finished':len([r for r in rows if r[2] == 3])}
             
         return contadores
+
+    @staticmethod
+    def create(title, description, status, responsible):
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                INSERT INTO work_orders
+                (title, description, status, responsible)
+                VALUES (%s, %s, %s, %s)
+            """, [title, description, status, responsible])
+
+            return cursor.lastrowid
+
+    @staticmethod
+    def get_responsibles():
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT id, name
+                FROM users
+                ORDER BY name
+            """)
+            rows = cursor.fetchall()
+
+        return [
+            {'id': row[0], 'name': row[1]}
+            for row in rows
+        ]
