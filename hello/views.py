@@ -6,6 +6,7 @@ from django.http import Http404
 from .entities.user import User
 from .entities.work_order import Work_order
 from .entities.work_orders_history import Work_Orders_History
+from .enums.profile import Profile
 from .enums.work_order_status import Status
 
 
@@ -44,10 +45,29 @@ def work_orders(request):
 
 @admin_required
 def people(request):
+    error = None
+
+    if request.method == 'POST':
+        try:
+            user_id = int(request.POST.get('user_id', ''))
+            profile = Profile(int(request.POST.get('profile', '')))
+        except (ValueError, TypeError):
+            error = 'Invalid user or profile.'
+        else:
+            if user_id == request.session.get('user_id'):
+                error = 'You cannot change your own profile.'
+            elif User.update_profile(user_id, profile) == 0:
+                error = 'User not found.'
+            else:
+                return redirect('people')
+
     users = User.get_all()
 
     return render(request, 'hello/people.html', {
-        'users': users
+        'users': users,
+        'profiles': list(Profile),
+        'current_user_id': request.session.get('user_id'),
+        'error': error
     })
 
 
@@ -96,7 +116,7 @@ def signup(request):
     return render(request, 'hello/signup.html')
 
 
-@login_required_custom
+@admin_required
 def add_work_order(request):
     users = Work_order.get_responsibles()
     error = None
@@ -184,7 +204,7 @@ def edit_work_order(request, order_id):
     })
 
 
-@login_required_custom
+@admin_required
 def delete_work_order(request, order_id):
     order = Work_order.get_by_id(order_id)
 

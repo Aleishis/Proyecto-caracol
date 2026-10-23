@@ -1,14 +1,18 @@
 {% include './header.html' %}
 {% load static %}
     
-    <h1>Consulta de ordenes de trabajo</h1>
+    <h1>Manage Staff</h1>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
 
     <table class="table-user">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Cuenta</th>
-                <th>Perfil</th>
+                <th>Name</th>
+                <th>Account</th>
+                <th>Profile</th>
             </tr>
         </thead>
         <tbody>
@@ -16,7 +20,24 @@
             <tr>
                 <td>{{u.name}}</td>
                 <td>{{u.account}}</td>
-                <td> {{u.profile.name}}</td>
+                <td>
+                    {% if u.id == current_user_id %}
+                        {{ u.profile.name }}
+                    {% else %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ u.id }}">
+                        <select name="profile" required onchange="this.form.submit()">
+                            {% for p in profiles %}
+                                <option value="{{ p.value }}"
+                                    {% if p == u.profile %}selected{% endif %}>
+                                    {{ p.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

@@ -114,7 +114,6 @@ class Work_order:
 
             return cursor.rowcount
 
-
     
     @staticmethod
     def delete(order_id):
@@ -146,3 +145,4 @@ class Work_order:
                 """, [order_id])
 
                 return "deleted"
+    

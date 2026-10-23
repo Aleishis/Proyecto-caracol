@@ -32,6 +32,17 @@ class User:
         ]
 
     @staticmethod
+    def update_profile(user_id, profile):
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                UPDATE users
+                SET profile = %s
+                WHERE id = %s
+            """, [profile.value, user_id])
+
+            return cursor.rowcount
+
+    @staticmethod
     def get_by_account(account):
         with connection.cursor() as cursor:
             cursor.execute("""

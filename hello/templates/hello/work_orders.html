@@ -26,9 +26,11 @@
 
 </section>
 
+{% if request.session.profile == 1 %}
 <section class="buttons-section">
     <a href="{% url 'add_work_order' %}" class="btn add">Add</a>
 </section>
+{% endif %}
 
 <section style="padding: 0 14px;">
 
@@ -50,7 +52,9 @@
                 <td>{{w.status.name}}</td>
                 <td>{{w.responsible}}</td>
                 <td>
+                    {% if request.session.profile == 1 %}
                      <a href="{% url 'delete_work_order' w.id %}" class="btn delete">Delete</a>
+                    {% endif %}
                      <a href="{% url 'edit_work_order' w.id %}" class="btn edit">Edit</a>
                 </td>
             </tr>

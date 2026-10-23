@@ -22,6 +22,32 @@ header a {
     text-decoration: none;
 }
 
+header .header-nav {
+    display: flex;
+    gap: 10px;
+}
+
+header .logout-form {
+    margin: 0;
+}
+
+header .header-nav a,
+header .logout-form button {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 6px 14px;
+    font: inherit;
+    cursor: pointer;
+}
+
+header .header-nav a:hover,
+header .logout-form button:hover {
+    background: white;
+    color: #333;
+}
+
 /* Dashboard */
 .dashboard {
     display: flex;
