@@ -99,18 +99,21 @@ class Work_order:
             'responsible': row[4]
         }
 
+    
     @staticmethod
-    def update(id, title, description, responsible):
+    def update(id, title, description, status, responsible):
         with connection.cursor() as cursor:
             cursor.execute("""
                 UPDATE work_orders
                 SET title = %s,
                     description = %s,
+                    status = %s,
                     responsible = %s
                 WHERE id = %s
-            """, [title, description, responsible, id])
+            """, [title, description, status, responsible, id])
 
             return cursor.rowcount
+
 
     
     @staticmethod
