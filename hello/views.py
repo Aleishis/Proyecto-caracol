@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .entities.user import User
 from .entities.work_order import Work_order
+from .entities.work_orders_history import Work_Orders_History
 from .enums.work_order_status import Status
 from django.http import Http404
 from django.http import Http404
@@ -77,6 +78,8 @@ def add_work_order(request):
 
 def edit_work_order(request, order_id):
     order = Work_order.get_by_id(order_id)
+    
+    history = Work_Orders_History.get_history(order_id)
 
     if order is None:
         raise Http404("Work order not found")
@@ -94,22 +97,27 @@ def edit_work_order(request, order_id):
             error = 'Title must have at most 60 characters.'
         else:
             try:
+                status = Status(int(request.POST.get('status', '')))
                 responsible = int(request.POST.get('responsible', ''))
             except (ValueError, TypeError):
-                error = 'Invalid responsible.'
+                error = 'Invalid status or responsible.'
             else:
                 if not any(u['id'] == responsible for u in users):
                     error = 'Please select a valid responsible.'
                 else:
                     Work_order.update(
-                        order_id, title, description, responsible
+                        order_id, title, description, status.value, responsible
                     )
+                    
+                    Work_Orders_History.add_history(responsible, status.value, order_id, description )
                     return redirect('work_orders')
 
     return render(request, 'hello/edit_work_order.html', {
         'order': order,
         'users': users,
-        'error': error
+        'statuses': list(Status),
+        'error': error,
+        'history':history
     })
 
 

@@ -171,3 +171,20 @@ header a {
 .error-message {
     color: #dc3545;
 }
+
+
+.contenedor {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    min-height: 100vh;
+}
+
+.izquierda, 
+.derecha {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
