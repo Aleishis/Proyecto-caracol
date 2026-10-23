@@ -129,7 +129,7 @@ class Work_order:
 
                 cursor.execute("""
                     SELECT 1
-                    FROM work_order_history
+                    FROM work_orders_history
                     WHERE id_work_order = %s
                     LIMIT 1
                 """, [order_id])
