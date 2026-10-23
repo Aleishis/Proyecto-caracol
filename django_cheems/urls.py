@@ -24,5 +24,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('people/', views.people, name='people'),
     path('work-orders/', views.work_orders, name='work_orders'),
-    path('signup/', views.signup, name='signup')
+    path('signup/', views.signup, name='signup'),
+    path('work_orders/add/', views.add_work_order, name='add_work_order'),
+    path('work_orders/<int:order_id>/edit/', views.edit_work_order, name='edit_work_order'),
+    path('work_orders/<int:order_id>/delete/', views.delete_work_order, name='delete_work_order'),
 ]
