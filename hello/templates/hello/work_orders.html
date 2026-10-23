@@ -50,8 +50,8 @@
                 <td>{{w.status.name}}</td>
                 <td>{{w.responsible}}</td>
                 <td>
-                     <button class="btn delete">Delete</button>
-                     <button class="btn edit">Edit</button>
+                     <a href="{% url 'delete_work_order' w.id %}" class="btn delete">Delete</a>
+                     <a href="{% url 'edit_work_order' w.id %}" class="btn edit">Edit</a>
                 </td>
             </tr>
             {% empty %}

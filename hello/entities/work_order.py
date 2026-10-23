@@ -1,9 +1,10 @@
-from django.db import connection
+from django.db import connection, transaction
 from ..enums.work_order_status import Status
 
 class Work_order:
     
-    def __init__(self, title, description, status, responsible):
+    def __init__(self, id, title, description, status, responsible):
+        self.id = id
         self.title = title
         self.description = description
         self.status = status
@@ -19,13 +20,13 @@ class Work_order:
         
         with connection.cursor() as cursor:
             cursor.execute("""
-                        SELECT wo.title, wo.description, wo.status, u.name
-	                    FROM work_orders wo JOIN users u
-                        ON u.id = wo.responsible
-                           """)
+                        SELECT wo.id, wo.title, wo.description, wo.status, u.name
+                        FROM work_orders wo
+                        LEFT JOIN users u ON u.id = wo.responsible
+                    """)
             rows = cursor.fetchall()
             
-        return [Work_order(row[0], row[1], Status(row[2]), row[3]) for row in rows]
+        return [Work_order(row[0], row[1], row[2], Status(row[3]), row[4]) for row in rows]
 
 
     @staticmethod
@@ -74,3 +75,71 @@ class Work_order:
             {'id': row[0], 'name': row[1]}
             for row in rows
         ]
+
+    
+    @staticmethod
+    def get_by_id(id):
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT id, title, description, status, responsible
+                FROM work_orders
+                WHERE id = %s
+            """, [id])
+
+            row = cursor.fetchone()
+
+        if row is None:
+            return None
+
+        return {
+            'id': row[0],
+            'title': row[1],
+            'description': row[2],
+            'status': row[3],
+            'responsible': row[4]
+        }
+
+    @staticmethod
+    def update(id, title, description, responsible):
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                UPDATE work_orders
+                SET title = %s,
+                    description = %s,
+                    responsible = %s
+                WHERE id = %s
+            """, [title, description, responsible, id])
+
+            return cursor.rowcount
+
+    
+    @staticmethod
+    def delete(order_id):
+        with transaction.atomic():
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT id
+                    FROM work_orders
+                    WHERE id = %s
+                    FOR UPDATE
+                """, [order_id])
+
+                if cursor.fetchone() is None:
+                    return "not_found"
+
+                cursor.execute("""
+                    SELECT 1
+                    FROM work_order_history
+                    WHERE id_work_order = %s
+                    LIMIT 1
+                """, [order_id])
+
+                if cursor.fetchone():
+                    return "has_history"
+
+                cursor.execute("""
+                    DELETE FROM work_orders
+                    WHERE id = %s
+                """, [order_id])
+
+                return "deleted"
