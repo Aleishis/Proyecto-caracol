@@ -164,7 +164,7 @@ def edit_work_order(request, order_id):
                         order_id,
                         title,
                         description,
-                        status.value,
+                        status,
                         responsible
                     )
                     Work_Orders_History.add_history(
